@@ -1,33 +1,75 @@
-<html>
+<!DOCTYPE html>
+<head>
+  <title>Emoji picker!</title>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
 <body>
 <div class='container'>
-<input type='text' class='input' />
-<div class='picker'></div>
+  <div class='wrap'>
+    <div>Try typing <code>:dog:</code></div>
+    <input type='text' class='input' />
+    <div class='picker'></div>
+  </div>
 </div>
 </body>
 <style>
+html, body {
+  font-family: sans-serif;
+  margin: 20px;
+  height: 100%;
+  margin: 0;
+  font-size: 30px;
+}
 .container {
   width: 100%;
+  height: 100%;
   text-align: center;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrap {
+  width: 70%;
+  text-align: center;
+  position: relative;
+}
+.wrap > div {
+  margin-bottom: 10px;
+}
+.wrap * {
+  width: 100%;
+}
+.picker {
+  position: absolute;
+  top: 120px;
 }
 .input {
-  width: 600px;
-  padding: 10px;
   font-size: 30px;
-  border: 2px solid grey;
+  width: 80%;
+  max-width: 600px;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  padding: 10px;
+  border: 3px solid grey;
   outline: none;
 }
 .input:focus {
   border-color: hotpink;
 }
 .emoji {
+  width: auto;
   display: inline-block;
   font-size: 30px;
-  padding: 4px;
+  padding: 4px 8px;
   margin: 4px;
+  border-radius: 6px;
   border: 2px solid grey;
   cursor: pointer;
+}
+.emoji:first-child {
+  margin-left: 0;
 }
 .emoji:hover {
   border-color: hotpink;
