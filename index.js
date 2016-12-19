@@ -25,7 +25,7 @@
     matches.length && updatePicker(str, matches)
   }
 
-  const onKeyUp = (event) => {
+  const onInput = (event) => {
     const val = input.value
     const lastWord = val.substring(val.lastIndexOf(' ') + 1, val.length)
     event.keyCode === 13 && matches.length && updateText(lastWord, matches[0].emoji)
@@ -33,5 +33,5 @@
     lastWord.match(match) ? find(lastWord) : clearPicker()
   }
 
-  input.addEventListener('keyup', onKeyUp)
+  input.addEventListener('input', onInput)
 })()
