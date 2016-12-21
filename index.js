@@ -29,7 +29,7 @@
     const val = input.value
     const lastWord = val.substring(val.lastIndexOf(' ') + 1, val.length)
     event.keyCode === 13 && matches.length && updateText(lastWord, matches[0].emoji)
-    const match = /:[a-z]/
+    const match = /:[a-z0-9]/
     lastWord.match(match) ? find(lastWord) : clearPicker()
   }
 
