@@ -2,7 +2,7 @@
   let matches
   const input = document.querySelector('.input')
   const picker = document.querySelector('.picker')
-  const clearPicker = () => picker.innerHTML = ''
+  const clearPicker = () => { picker.innerHTML = '' }
   const updatePicker = (str, matches) => clearPicker() & matches.forEach((match) => picker.appendChild(createLink(str, match)))
 
   const createLink = (str, match) => {
@@ -28,10 +28,10 @@
   const onInput = (event) => {
     const val = input.value
     const lastWord = val.substring(val.lastIndexOf(' ') + 1, val.length)
-    event.keyCode === 13 && matches.length && updateText(lastWord, matches[0].emoji)
     const match = /:[a-z0-9]/
+    event.keyCode === 13 && matches.length && lastWord.match(match) && updateText(lastWord, matches[0].emoji)
     lastWord.match(match) ? find(lastWord) : clearPicker()
   }
 
-  input.addEventListener('input', onInput)
+  ['input', 'keyup'].map((event) => input.addEventListener(event, onInput))
 })()
