@@ -68,9 +68,12 @@
       <div class='wrap'>
         <div>Try typing <code>:dog:</code></div>
         <input type='text' class='input' />
-        <div class='picker'></div>
       </div>
     </div>
   </body>
-  <script src='index.js'></script>
+  <script type='module'>
+  import picker from '/src/index.js'
+  import loadJSON from '/src/loadJSON.js'
+  loadJSON('./src/emoji.json').then(emoji => picker('.input', emoji))
+  </script>
 </html>
