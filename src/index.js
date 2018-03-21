@@ -22,7 +22,7 @@ export default (className, emoji) => {
 
   const find = (str, emoji) => {
     const match = new RegExp(`^${str.substring(1, str.length)}`)
-    matches = Object.keys(emoji).filter((emoj) => {
+    matches = Object.keys(emoji).filter(emoj => {
       return match.test(emoj)
     }).map((key) => {
       return { name: key, emoji: emoji[key] }
