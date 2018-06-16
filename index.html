@@ -72,8 +72,8 @@
     </div>
   </body>
   <script type='module'>
-  import picker from '/src/index.js'
-  import fetchJSON from '/src/fetchJSON.js'
+  import picker from './src/index.js'
+  import fetchJSON from './src/fetchJSON.js'
   fetchJSON('./src/emoji.json').then(emoji => picker('.input', emoji))
   </script>
 </html>
