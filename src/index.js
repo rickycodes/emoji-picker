@@ -15,18 +15,17 @@ export default (className, emoji) => {
   }
 
   const updatePicker = (str, matches) => {
-    clearElement(picker) & matches.forEach((match) => {
+    clearElement(picker) & matches.forEach(match => {
       picker.appendChild(createLink(str, match, updateText))
     })
   }
 
   const find = (str, emoji) => {
     const match = new RegExp(`^${str.substring(1, str.length)}`)
-    matches = Object.keys(emoji).filter(emoj => {
-      return match.test(emoj)
-    }).map((key) => {
-      return { name: key, emoji: emoji[key] }
-    })
+    matches = Object
+      .keys(emoji)
+      .filter(emoj => match.test(emoj))
+      .map(key => ({ name: key, emoji: emoji[key] }))
     return matches.length && updatePicker(str, matches)
   }
 

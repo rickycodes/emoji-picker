@@ -73,7 +73,7 @@
   </body>
   <script type='module'>
   import picker from '/src/index.js'
-  import loadJSON from '/src/loadJSON.js'
-  loadJSON('./src/emoji.json').then(emoji => picker('.input', emoji))
+  import fetchJSON from '/src/fetchJSON.js'
+  fetchJSON('./src/emoji.json').then(emoji => picker('.input', emoji))
   </script>
 </html>
