@@ -1,43 +1,87 @@
 import createLink from './createLink.js'
 import clearElement from './clearElement.js'
+import keyboardNavigation from './keyboardNavigation.js'
 
-export default (className, emoji) => {
-  let matches
-  const events = ['input', 'keyup']
-  const input = document.querySelector(className)
+let instanceCount = 0
+
+export default (selector, emoji) => {
+  const input = document.querySelector(selector)
+  if (!input) throw new Error(`Emoji picker input not found: ${selector}`)
+
   const picker = document.createElement('div')
-  picker.setAttribute('class', 'picker')
+  picker.className = 'picker'
+  picker.id = input.id
+    ? `${input.id}-suggestions`
+    : `emoji-picker-${++instanceCount}-suggestions`
+  picker.setAttribute('role', 'listbox')
+  picker.setAttribute('aria-label', 'Emoji suggestions')
   input.parentNode.appendChild(picker)
+  input.setAttribute('role', 'combobox')
+  input.setAttribute('aria-autocomplete', 'list')
+  input.setAttribute('aria-controls', picker.id)
+  input.setAttribute('aria-expanded', 'false')
 
-  const updateText = (last, emoji) => {
-    input.value = input.value.replace(last, emoji)
-    input.focus() & clearElement(picker)
+  let matches = []
+  let queryRange = null
+  let navigation
+
+  const closePicker = () => {
+    clearElement(picker)
+    matches = []
+    queryRange = null
+    if (navigation) navigation.reset()
+    input.setAttribute('aria-expanded', 'false')
+    input.removeAttribute('aria-activedescendant')
   }
 
-  const updatePicker = (str, matches) => {
-    clearElement(picker) & matches.forEach(match => {
-      picker.appendChild(createLink(str, match, updateText))
-    })
+  const selectEmoji = emojiCharacter => {
+    if (!queryRange) return
+    input.setRangeText(emojiCharacter, queryRange.start, queryRange.end, 'end')
+    closePicker()
+    input.focus()
+    input.dispatchEvent(new Event('input', { bubbles: true }))
   }
 
-  const find = (str, emoji) => {
-    const match = new RegExp(`^${str.substring(1, str.length)}`)
-    matches = Object
-      .keys(emoji)
-      .filter(emoj => match.test(emoj))
-      .map(key => ({ name: key, emoji: emoji[key] }))
-    return matches.length && updatePicker(str, matches)
+  navigation = keyboardNavigation(input, picker, index => {
+    if (matches[index]) selectEmoji(matches[index].emoji)
+  }, closePicker)
+
+  const onInput = () => {
+    const caret = input.selectionStart
+    const beforeCaret = input.value.slice(0, caret)
+    const token = /:([a-z0-9_+-]+)$/i.exec(beforeCaret)
+    if (!token) return closePicker()
+
+    const prefix = token[1].toLowerCase()
+    queryRange = { start: caret - token[0].length, end: caret }
+    matches = Object.keys(emoji)
+      .filter(name => name.toLowerCase().startsWith(prefix))
+      .slice(0, 30)
+      .map(name => ({ name, emoji: emoji[name] }))
+
+    if (!matches.length) return closePicker()
+    clearElement(picker)
+    navigation.reset()
+    matches.forEach((match, index) => picker.appendChild(createLink(match, index, picker.id)))
+    input.setAttribute('aria-expanded', 'true')
+  }
+  input.addEventListener('input', onInput)
+
+  const destroy = () => {
+    closePicker()
+    input.removeAttribute('aria-controls')
+    input.removeAttribute('aria-expanded')
+    input.removeAttribute('aria-autocomplete')
+    input.removeAttribute('aria-activedescendant')
+    input.removeAttribute('role')
+    input.removeEventListener('input', onInput)
+    navigation.destroy()
+    picker.remove()
   }
 
-  const onInput = (emoji, event) => {
-    const { value } = event.target
-    const lastWord = value.substring(value.lastIndexOf(' ') + 1, value.length)
-    const match = /:[a-z0-9]/
-    if (event.keyCode === 13 && matches.length && lastWord.match(match)) {
-      return updateText(lastWord, matches[0].emoji)
-    }
-    return lastWord.match(match) ? find(lastWord, emoji) : clearElement(picker)
+  return {
+    input,
+    picker,
+    destroy
   }
-
-  events.map((event) => input.addEventListener(event, onInput.bind(null, emoji)))
 }

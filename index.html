@@ -61,6 +61,18 @@
     .emoji:hover {
       border-color: hotpink;
     }
+    .picker {
+      width: 80%;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .emoji[aria-selected="true"], .emoji:focus-visible {
+      border-color: hotpink;
+      background: #fff0f7;
+      outline: 2px solid hotpink;
+      outline-offset: 1px;
+    }
     </style>
   </head>
   <body>
@@ -74,6 +86,8 @@
   <script type='module'>
   import picker from './src/index.js'
   import fetchJSON from './src/fetchJSON.js'
-  fetchJSON('./src/emoji.json').then(emoji => picker('.input', emoji))
+  fetchJSON('./src/emoji.json').then(emoji => picker('.input', emoji)).catch(error => {
+    console.error(error)
+  })
   </script>
 </html>

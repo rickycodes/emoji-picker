@@ -1,14 +1,22 @@
-> This uses native (in browser, no bundling!) supported ES6 modules, so you may need to enable that in order for it to work.
+# Emoji Picker
 
-## Emoji Picker
+A small vanilla JavaScript emoji picker. Type a shortcode such as `:dog` to see matching emoji, then choose one with the mouse or keyboard.
 
-Simple vanilla JavaScript emoji picker that replaces the basecamp emoji string, e.g. `:dog:` in a text input with the unicode character equivalant, e.g. :dog:
+## Use
 
-<hr />
+The project uses native browser ES modules and does not need a build step. Serve this directory over HTTP and open `index.html` (browsers generally block module imports from `file://`).
 
-![Emoji!](http://i.imgur.com/DwGq7Km.gif)
+```js
+import picker from './src/index.js'
+import fetchJSON from './src/fetchJSON.js'
 
-### License
-Copyright (c) 2016 Ricky Miller (@rickycodes).
+fetchJSON('./src/emoji.json').then(emoji => picker('.input', emoji))
+```
 
-Released under the [MIT license](https://tldrlegal.com/license/mit-license).
+Use **Up/Down** to move through suggestions, **Enter** to insert the active emoji, and **Escape** to dismiss the list. The picker also works with mouse clicks. Matching uses the shortcode immediately before the text caret, so it can be used in the middle of a sentence.
+
+`picker(selector, emojiData)` returns the input, suggestion list, and a `destroy()` method for removing the picker and its accessibility attributes.
+
+## License
+
+Copyright (c) 2016 Ricky Miller (@rickycodes). Released under the [MIT license](https://tldrlegal.com/license/mit-license).
