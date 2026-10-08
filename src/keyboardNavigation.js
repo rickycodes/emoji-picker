@@ -5,24 +5,39 @@ export default (input, picker, select, close) => {
   const setActive = index => {
     const items = options()
     if (!items.length) return
-    activeIndex = (index + items.length) % items.length
+    activeIndex = Math.max(0, Math.min(index, items.length - 1))
     items.forEach((item, itemIndex) => {
       item.setAttribute('aria-selected', String(itemIndex === activeIndex))
     })
     input.setAttribute('aria-activedescendant', items[activeIndex].id)
+  }
+  const clearActive = () => {
+    activeIndex = -1
+    options().forEach(item => item.setAttribute('aria-selected', 'false'))
+    input.removeAttribute('aria-activedescendant')
   }
 
   const onKeydown = event => {
     const items = options()
     if (!items.length) return
 
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+    if (event.key === 'ArrowDown' && activeIndex < 0) {
       event.preventDefault()
-      const direction = event.key === 'ArrowDown' ? 1 : -1
-      setActive(activeIndex < 0 ? (direction > 0 ? 0 : items.length - 1) : activeIndex + direction)
+      setActive(0)
+    } else if (event.key === 'ArrowLeft' && activeIndex >= 0) {
+      event.preventDefault()
+      setActive(activeIndex - 1)
+    } else if (event.key === 'ArrowRight' && activeIndex >= 0) {
+      event.preventDefault()
+      setActive(activeIndex + 1)
+    } else if (event.key === 'ArrowUp' && activeIndex >= 0) {
+      event.preventDefault()
+      clearActive()
     } else if (event.key === 'Enter') {
-      event.preventDefault()
-      select(activeIndex < 0 ? 0 : activeIndex)
+      if (activeIndex >= 0) {
+        event.preventDefault()
+        select(activeIndex)
+      }
     } else if (event.key === 'Escape') {
       close()
     }
@@ -37,8 +52,7 @@ export default (input, picker, select, close) => {
 
   return {
     reset: () => {
-      activeIndex = -1
-      input.removeAttribute('aria-activedescendant')
+      clearActive()
     },
     destroy: () => {
       input.removeEventListener('keydown', onKeydown)
