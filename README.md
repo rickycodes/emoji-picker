@@ -1,6 +1,7 @@
 # Emoji Picker
 
 [![Tests](https://github.com/rickycodes/emoji-picker/actions/workflows/test.yml/badge.svg)](https://github.com/rickycodes/emoji-picker/actions/workflows/test.yml)
+[![Coverage](https://codecov.io/gh/rickycodes/emoji-picker/branch/main/graph/badge.svg)](https://codecov.io/gh/rickycodes/emoji-picker)
 
 A small vanilla JavaScript emoji picker. Type a shortcode such as `:dog` to see matching emoji, then choose one with the mouse or keyboard.
 
@@ -32,7 +33,7 @@ npm install
 npm test
 ```
 
-GitHub Actions runs `npm test` on every push and pull request.
+GitHub Actions runs `npm test` on every push and pull request. The command also writes a local coverage report to `coverage/` and uploads it to Codecov in CI.
 
 ## Formatting
 
