@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import fetchJSON from "./fetchJSON.js";
+import emojis from "./emoji.json";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -7,8 +8,8 @@ afterEach(() => {
 
 describe("fetchJSON", () => {
   it("returns parsed JSON from a successful response", async () => {
-    const emoji = { dog: "🐶" };
-    const json = vi.fn().mockResolvedValue(emoji);
+    const { dog } = emojis;
+    const json = vi.fn().mockResolvedValue({ dog });
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue({
@@ -18,7 +19,7 @@ describe("fetchJSON", () => {
       }),
     );
 
-    await expect(fetchJSON("/emoji.json")).resolves.toEqual(emoji);
+    await expect(fetchJSON("/emoji.json")).resolves.toEqual({ dog });
     expect(fetch).toHaveBeenCalledWith("/emoji.json");
     expect(json).toHaveBeenCalledOnce();
   });
