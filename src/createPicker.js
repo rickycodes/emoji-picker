@@ -1,6 +1,7 @@
 import keyboardNavigation from "./keyboardNavigation.js";
 import { findCompletedShortcode, findSuggestions } from "./emojiSearch.js";
 import createPickerView from "./pickerView.js";
+import { EVENT_INPUT } from "./constants.js";
 
 export default (selector, emoji) => {
   const input = document.querySelector(selector);
@@ -25,7 +26,7 @@ export default (selector, emoji) => {
     input.setRangeText(emojiCharacter, queryRange.start, queryRange.end, "end");
     closePicker();
     input.focus();
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
   };
 
   navigation = keyboardNavigation(
@@ -49,7 +50,7 @@ export default (selector, emoji) => {
         "preserve",
       );
       closePicker();
-      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
       return;
     }
 
@@ -63,11 +64,11 @@ export default (selector, emoji) => {
     navigation.reset();
     view.render(matches);
   };
-  input.addEventListener("input", onInput);
+  input.addEventListener(EVENT_INPUT, onInput);
 
   const destroy = () => {
     closePicker();
-    input.removeEventListener("input", onInput);
+    input.removeEventListener(EVENT_INPUT, onInput);
     navigation.destroy();
     view.destroy();
   };

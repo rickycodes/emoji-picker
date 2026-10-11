@@ -1,0 +1,16 @@
+export const ARIA_ACTIVE_DESCENDANT = "aria-activedescendant";
+export const ARIA_AUTOCOMPLETE = "aria-autocomplete";
+export const ARIA_CONTROLS = "aria-controls";
+export const ARIA_EXPANDED = "aria-expanded";
+export const ARIA_LABEL = "aria-label";
+export const ARIA_SELECTED = "aria-selected";
+export const ARIA_TRUE = "true";
+export const ARIA_FALSE = "false";
+export const EVENT_CLICK = "click";
+export const EVENT_INPUT = "input";
+export const EVENT_KEYDOWN = "keydown";
+export const ROLE = "role";
+export const ROLE_COMBOBOX = "combobox";
+export const ROLE_LISTBOX = "listbox";
+export const ROLE_OPTION = "option";
+export const OPTION_SELECTOR = `[${ROLE}="${ROLE_OPTION}"]`;

@@ -1,5 +1,17 @@
 import createLink from "./createLink.js";
 import setAttributes from "./setAttributes.js";
+import {
+  ARIA_ACTIVE_DESCENDANT,
+  ARIA_AUTOCOMPLETE,
+  ARIA_CONTROLS,
+  ARIA_EXPANDED,
+  ARIA_FALSE,
+  ARIA_LABEL,
+  ARIA_TRUE,
+  ROLE,
+  ROLE_COMBOBOX,
+  ROLE_LISTBOX,
+} from "./constants.js";
 
 let instanceCount = 0;
 
@@ -10,36 +22,36 @@ export default (input) => {
     ? `${input.id}-suggestions`
     : `emoji-picker-${++instanceCount}-suggestions`;
   setAttributes(picker, {
-    role: "listbox",
-    "aria-label": "Emoji suggestions",
+    [ROLE]: ROLE_LISTBOX,
+    [ARIA_LABEL]: "Emoji suggestions",
   });
   input.parentNode.appendChild(picker);
   setAttributes(input, {
-    role: "combobox",
-    "aria-autocomplete": "list",
-    "aria-controls": picker.id,
-    "aria-expanded": "false",
+    [ROLE]: ROLE_COMBOBOX,
+    [ARIA_AUTOCOMPLETE]: "list",
+    [ARIA_CONTROLS]: picker.id,
+    [ARIA_EXPANDED]: ARIA_FALSE,
   });
 
   return {
     element: picker,
     clear: () => {
       picker.replaceChildren();
-      input.setAttribute("aria-expanded", "false");
-      input.removeAttribute("aria-activedescendant");
+      input.setAttribute(ARIA_EXPANDED, ARIA_FALSE);
+      input.removeAttribute(ARIA_ACTIVE_DESCENDANT);
     },
     render: (matches) => {
       picker.replaceChildren(
         ...matches.map((match, index) => createLink(match, index, picker.id)),
       );
-      input.setAttribute("aria-expanded", "true");
+      input.setAttribute(ARIA_EXPANDED, ARIA_TRUE);
     },
     destroy: () => {
-      input.removeAttribute("aria-controls");
-      input.removeAttribute("aria-expanded");
-      input.removeAttribute("aria-autocomplete");
-      input.removeAttribute("aria-activedescendant");
-      input.removeAttribute("role");
+      input.removeAttribute(ARIA_CONTROLS);
+      input.removeAttribute(ARIA_EXPANDED);
+      input.removeAttribute(ARIA_AUTOCOMPLETE);
+      input.removeAttribute(ARIA_ACTIVE_DESCENDANT);
+      input.removeAttribute(ROLE);
       picker.remove();
     },
   };

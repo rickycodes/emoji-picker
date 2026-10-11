@@ -1,20 +1,33 @@
+import {
+  ARIA_ACTIVE_DESCENDANT,
+  ARIA_FALSE,
+  ARIA_SELECTED,
+  ARIA_TRUE,
+  EVENT_CLICK,
+  EVENT_KEYDOWN,
+  OPTION_SELECTOR,
+} from "./constants.js";
+
 export default (input, picker, select, close) => {
   let activeIndex = -1;
 
-  const options = () => Array.from(picker.querySelectorAll('[role="option"]'));
+  const options = () => Array.from(picker.querySelectorAll(OPTION_SELECTOR));
   const setActive = (index) => {
     const items = options();
     if (!items.length) return;
     activeIndex = Math.max(0, Math.min(index, items.length - 1));
     items.forEach((item, itemIndex) => {
-      item.setAttribute("aria-selected", String(itemIndex === activeIndex));
+      item.setAttribute(
+        ARIA_SELECTED,
+        itemIndex === activeIndex ? ARIA_TRUE : ARIA_FALSE,
+      );
     });
-    input.setAttribute("aria-activedescendant", items[activeIndex].id);
+    input.setAttribute(ARIA_ACTIVE_DESCENDANT, items[activeIndex].id);
   };
   const clearActive = () => {
     activeIndex = -1;
-    options().forEach((item) => item.setAttribute("aria-selected", "false"));
-    input.removeAttribute("aria-activedescendant");
+    options().forEach((item) => item.setAttribute(ARIA_SELECTED, ARIA_FALSE));
+    input.removeAttribute(ARIA_ACTIVE_DESCENDANT);
   };
 
   const onKeydown = (event) => {
@@ -42,21 +55,21 @@ export default (input, picker, select, close) => {
       close();
     }
   };
-  input.addEventListener("keydown", onKeydown);
+  input.addEventListener(EVENT_KEYDOWN, onKeydown);
 
   const onClick = (event) => {
-    const option = event.target.closest('[role="option"]');
+    const option = event.target.closest(OPTION_SELECTOR);
     if (option && picker.contains(option)) select(Number(option.dataset.index));
   };
-  picker.addEventListener("click", onClick);
+  picker.addEventListener(EVENT_CLICK, onClick);
 
   return {
     reset: () => {
       clearActive();
     },
     destroy: () => {
-      input.removeEventListener("keydown", onKeydown);
-      picker.removeEventListener("click", onClick);
+      input.removeEventListener(EVENT_KEYDOWN, onKeydown);
+      picker.removeEventListener(EVENT_CLICK, onClick);
     },
   };
 };

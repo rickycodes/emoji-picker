@@ -1,4 +1,11 @@
 import setAttributes from "./setAttributes.js";
+import {
+  ARIA_FALSE,
+  ARIA_LABEL,
+  ARIA_SELECTED,
+  ROLE,
+  ROLE_OPTION,
+} from "./constants.js";
 
 export default (match, index, pickerId) => {
   const option = document.createElement("div");
@@ -6,9 +13,9 @@ export default (match, index, pickerId) => {
   option.id = `${pickerId}-option-${index}`;
   option.dataset.index = index;
   setAttributes(option, {
-    role: "option",
-    "aria-label": match.name.replace(/_/g, " "),
-    "aria-selected": "false",
+    [ROLE]: ROLE_OPTION,
+    [ARIA_LABEL]: match.name.replace(/_/g, " "),
+    [ARIA_SELECTED]: ARIA_FALSE,
     class: "emoji",
   });
   return option;
