@@ -1,11 +1,13 @@
-export const ARIA_ACTIVE_DESCENDANT = "aria-activedescendant";
-export const ARIA_AUTOCOMPLETE = "aria-autocomplete";
-export const ARIA_CONTROLS = "aria-controls";
-export const ARIA_EXPANDED = "aria-expanded";
-export const ARIA_LABEL = "aria-label";
-export const ARIA_SELECTED = "aria-selected";
+export const ARIA_PREFIX = "aria-";
+export const ARIA_ACTIVE_DESCENDANT = `${ARIA_PREFIX}activedescendant`;
+export const ARIA_AUTOCOMPLETE = `${ARIA_PREFIX}autocomplete`;
+export const ARIA_CONTROLS = `${ARIA_PREFIX}controls`;
+export const ARIA_EXPANDED = `${ARIA_PREFIX}expanded`;
+export const ARIA_LABEL = `${ARIA_PREFIX}label`;
+export const ARIA_SELECTED = `${ARIA_PREFIX}selected`;
 export const ARIA_TRUE = "true";
 export const ARIA_FALSE = "false";
+
 export const EVENT_CLICK = "click";
 export const EVENT_INPUT = "input";
 export const EVENT_KEYDOWN = "keydown";
