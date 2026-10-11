@@ -40,6 +40,23 @@ describe("emoji picker", () => {
     expect(input.getAttribute("aria-expanded")).toBe("false");
   });
 
+  it("replaces an exact shortcode when followed by a space", () => {
+    const input = setup("Say :cat: ");
+    input.setSelectionRange(input.value.length, input.value.length);
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+
+    expect(input.value).toBe("Say 🐱 ");
+    expect(input.selectionStart).toBe(input.value.length);
+  });
+
+  it("leaves unknown completed shortcodes unchanged", () => {
+    const input = setup("Say :unknown: ");
+    input.setSelectionRange(input.value.length, input.value.length);
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+
+    expect(input.value).toBe("Say :unknown: ");
+  });
+
   it("moves the active suggestion with arrow keys and inserts it at the caret", () => {
     const input = setup("hello :do world");
     const caret = "hello :do".length;

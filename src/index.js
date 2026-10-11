@@ -59,6 +59,20 @@ export default (selector, emoji) => {
   const onInput = () => {
     const caret = input.selectionStart;
     const beforeCaret = input.value.slice(0, caret);
+    const completedToken = /:([a-z0-9_+-]+): $/i.exec(beforeCaret);
+    if (completedToken) {
+      const name = Object.keys(emoji).find(
+        (candidate) => candidate.toLowerCase() === completedToken[1].toLowerCase(),
+      );
+      if (name) {
+        const start = caret - completedToken[0].length;
+        input.setRangeText(emoji[name], start, caret - 1, "preserve");
+        closePicker();
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        return;
+      }
+    }
+
     const token = /:([a-z0-9_+-]+)$/i.exec(beforeCaret);
     if (!token) return closePicker();
 
