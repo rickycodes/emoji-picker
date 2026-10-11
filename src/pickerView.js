@@ -12,9 +12,10 @@ import {
   ROLE,
   ROLE_COMBOBOX,
   ROLE_LISTBOX,
+  ZERO,
 } from "./constants.js";
 
-let instanceCount = 0;
+let instanceCount = ZERO;
 
 export default (input) => {
   const picker = document.createElement(ELEMENT_DIV);

@@ -6,6 +6,7 @@ import {
   EVENT_CLICK,
   EVENT_KEYDOWN,
   OPTION_SELECTOR,
+  ZERO,
 } from "./constants.js";
 
 export default (input, picker, select, close) => {
@@ -15,7 +16,7 @@ export default (input, picker, select, close) => {
   const setActive = (index) => {
     const items = options();
     if (!items.length) return;
-    activeIndex = Math.max(0, Math.min(index, items.length - 1));
+    activeIndex = Math.max(ZERO, Math.min(index, items.length - 1));
     items.forEach((item, itemIndex) => {
       item.setAttribute(
         ARIA_SELECTED,
@@ -34,20 +35,20 @@ export default (input, picker, select, close) => {
     const items = options();
     if (!items.length) return;
 
-    if (event.key === "ArrowDown" && activeIndex < 0) {
+    if (event.key === "ArrowDown" && activeIndex < ZERO) {
       event.preventDefault();
-      setActive(0);
-    } else if (event.key === "ArrowLeft" && activeIndex >= 0) {
+      setActive(ZERO);
+    } else if (event.key === "ArrowLeft" && activeIndex >= ZERO) {
       event.preventDefault();
       setActive(activeIndex - 1);
-    } else if (event.key === "ArrowRight" && activeIndex >= 0) {
+    } else if (event.key === "ArrowRight" && activeIndex >= ZERO) {
       event.preventDefault();
       setActive(activeIndex + 1);
-    } else if (event.key === "ArrowUp" && activeIndex >= 0) {
+    } else if (event.key === "ArrowUp" && activeIndex >= ZERO) {
       event.preventDefault();
       clearActive();
     } else if (event.key === "Enter") {
-      if (activeIndex >= 0) {
+      if (activeIndex >= ZERO) {
         event.preventDefault();
         select(activeIndex);
       }
