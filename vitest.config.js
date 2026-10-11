@@ -8,6 +8,10 @@ export default defineConfig({
       exclude: ["src/**/*.test.js", "src/**/*.test-fixtures.js"],
       reporter: ["text", "lcov"],
       reportsDirectory: "./coverage",
+      thresholds: {
+        lines: 95,
+        branches: 80,
+      },
     },
   },
 });
