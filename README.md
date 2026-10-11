@@ -1,5 +1,7 @@
 # Emoji Picker
 
+[![Tests](https://github.com/rickycodes/emoji-picker/actions/workflows/test.yml/badge.svg)](https://github.com/rickycodes/emoji-picker/actions/workflows/test.yml)
+
 A small vanilla JavaScript emoji picker. Type a shortcode such as `:dog` to see matching emoji, then choose one with the mouse or keyboard.
 
 ## Use
@@ -20,6 +22,17 @@ Press **Down** to activate the first suggestion, then use **Left/Right** to move
 The input is exposed as a **combobox** connected to a **listbox** of suggestions. Each suggestion has an accessible name based on its shortcode, and the active suggestion is announced while focus stays in the input. The keyboard controls above let users browse and select suggestions without a mouse.
 
 `picker(selector, emojiData)` returns the input, suggestion list, and a `destroy()` method for removing the picker and its accessibility attributes.
+
+## Tests
+
+Run the behavior tests locally with:
+
+```sh
+npm install
+npm test
+```
+
+GitHub Actions runs `npm test` on every push and pull request.
 
 ## License
 
