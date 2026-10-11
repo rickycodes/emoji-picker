@@ -7,6 +7,7 @@ import {
   ARIA_EXPANDED,
   ARIA_FALSE,
   ARIA_LABEL,
+  ELEMENT_DIV,
   ARIA_TRUE,
   ROLE,
   ROLE_COMBOBOX,
@@ -16,7 +17,7 @@ import {
 let instanceCount = 0;
 
 export default (input) => {
-  const picker = document.createElement("div");
+  const picker = document.createElement(ELEMENT_DIV);
   picker.className = "picker";
   picker.id = input.id
     ? `${input.id}-suggestions`

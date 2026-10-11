@@ -9,6 +9,7 @@ export const ARIA_FALSE = "false";
 export const EVENT_CLICK = "click";
 export const EVENT_INPUT = "input";
 export const EVENT_KEYDOWN = "keydown";
+export const ELEMENT_DIV = "div";
 export const ROLE = "role";
 export const ROLE_COMBOBOX = "combobox";
 export const ROLE_LISTBOX = "listbox";
