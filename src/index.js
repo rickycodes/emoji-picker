@@ -1,6 +1,7 @@
 import createLink from "./createLink.js";
 import clearElement from "./clearElement.js";
 import keyboardNavigation from "./keyboardNavigation.js";
+import setAttributes from "./setAttributes.js";
 
 let instanceCount = 0;
 
@@ -13,13 +14,17 @@ export default (selector, emoji) => {
   picker.id = input.id
     ? `${input.id}-suggestions`
     : `emoji-picker-${++instanceCount}-suggestions`;
-  picker.setAttribute("role", "listbox");
-  picker.setAttribute("aria-label", "Emoji suggestions");
+  setAttributes(picker, {
+    role: "listbox",
+    "aria-label": "Emoji suggestions",
+  });
   input.parentNode.appendChild(picker);
-  input.setAttribute("role", "combobox");
-  input.setAttribute("aria-autocomplete", "list");
-  input.setAttribute("aria-controls", picker.id);
-  input.setAttribute("aria-expanded", "false");
+  setAttributes(input, {
+    role: "combobox",
+    "aria-autocomplete": "list",
+    "aria-controls": picker.id,
+    "aria-expanded": "false",
+  });
 
   let matches = [];
   let queryRange = null;
