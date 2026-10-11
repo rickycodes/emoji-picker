@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import fetchJSON from "./fetchJSON.js";
-import emojis from "./emoji.json";
+import emoji from "./emoji.test-fixtures.js";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -8,7 +8,7 @@ afterEach(() => {
 
 describe("fetchJSON", () => {
   it("returns parsed JSON from a successful response", async () => {
-    const { dog } = emojis;
+    const { dog } = emoji;
     const json = vi.fn().mockResolvedValue({ dog });
     vi.stubGlobal(
       "fetch",

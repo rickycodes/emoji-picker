@@ -1,12 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import picker from "./index.js";
-
-const emoji = {
-  dog: "🐶",
-  dog_face: "🐕",
-  dolphin: "🐬",
-  cat: "🐱",
-};
+import emoji from "./emoji.test-fixtures.js";
 
 let instance;
 
