@@ -1,6 +1,8 @@
+const shortcodePattern = /:([a-z0-9_+-]+)(: )?$/i;
+
 export const findCompletedShortcode = (text, emoji) => {
-  const match = /:([a-z0-9_+-]+): $/i.exec(text);
-  if (!match) return null;
+  const match = shortcodePattern.exec(text);
+  if (!match?.[2]) return null;
 
   const name = Object.keys(emoji).find(
     (candidate) => candidate.toLowerCase() === match[1].toLowerCase(),
@@ -15,8 +17,8 @@ export const findCompletedShortcode = (text, emoji) => {
 };
 
 export const findSuggestions = (text, emoji) => {
-  const token = /:([a-z0-9_+-]+)$/i.exec(text);
-  if (!token) return null;
+  const token = shortcodePattern.exec(text);
+  if (!token || token[2]) return null;
 
   const prefix = token[1].toLowerCase();
   return {

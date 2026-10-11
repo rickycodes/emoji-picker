@@ -1,43 +1,23 @@
-import createLink from "./createLink.js";
-import clearElement from "./clearElement.js";
 import keyboardNavigation from "./keyboardNavigation.js";
-import setAttributes from "./setAttributes.js";
 import { findCompletedShortcode, findSuggestions } from "./emojiSearch.js";
-
-let instanceCount = 0;
+import createPickerView from "./pickerView.js";
 
 export default (selector, emoji) => {
   const input = document.querySelector(selector);
   if (!input) throw new Error(`Emoji picker input not found: ${selector}`);
 
-  const picker = document.createElement("div");
-  picker.className = "picker";
-  picker.id = input.id
-    ? `${input.id}-suggestions`
-    : `emoji-picker-${++instanceCount}-suggestions`;
-  setAttributes(picker, {
-    role: "listbox",
-    "aria-label": "Emoji suggestions",
-  });
-  input.parentNode.appendChild(picker);
-  setAttributes(input, {
-    role: "combobox",
-    "aria-autocomplete": "list",
-    "aria-controls": picker.id,
-    "aria-expanded": "false",
-  });
+  const view = createPickerView(input);
+  const picker = view.element;
 
   let matches = [];
   let queryRange = null;
   let navigation;
 
   const closePicker = () => {
-    clearElement(picker);
+    view.clear();
     matches = [];
     queryRange = null;
     if (navigation) navigation.reset();
-    input.setAttribute("aria-expanded", "false");
-    input.removeAttribute("aria-activedescendant");
   };
 
   const selectEmoji = (emojiCharacter) => {
@@ -80,25 +60,16 @@ export default (selector, emoji) => {
     matches = suggestions.matches;
 
     if (!matches.length) return closePicker();
-    clearElement(picker);
     navigation.reset();
-    matches.forEach((match, index) =>
-      picker.appendChild(createLink(match, index, picker.id)),
-    );
-    input.setAttribute("aria-expanded", "true");
+    view.render(matches);
   };
   input.addEventListener("input", onInput);
 
   const destroy = () => {
     closePicker();
-    input.removeAttribute("aria-controls");
-    input.removeAttribute("aria-expanded");
-    input.removeAttribute("aria-autocomplete");
-    input.removeAttribute("aria-activedescendant");
-    input.removeAttribute("role");
     input.removeEventListener("input", onInput);
     navigation.destroy();
-    picker.remove();
+    view.destroy();
   };
 
   return {
