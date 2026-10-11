@@ -2,6 +2,7 @@ import createLink from "./createLink.js";
 import clearElement from "./clearElement.js";
 import keyboardNavigation from "./keyboardNavigation.js";
 import setAttributes from "./setAttributes.js";
+import { findCompletedShortcode, findSuggestions } from "./emojiSearch.js";
 
 let instanceCount = 0;
 
@@ -59,30 +60,24 @@ export default (selector, emoji) => {
   const onInput = () => {
     const caret = input.selectionStart;
     const beforeCaret = input.value.slice(0, caret);
-    const completedToken = /:([a-z0-9_+-]+): $/i.exec(beforeCaret);
-    if (completedToken) {
-      const name = Object.keys(emoji).find(
-        (candidate) =>
-          candidate.toLowerCase() === completedToken[1].toLowerCase(),
+    const completedShortcode = findCompletedShortcode(beforeCaret, emoji);
+    if (completedShortcode) {
+      input.setRangeText(
+        completedShortcode.emoji,
+        completedShortcode.start,
+        completedShortcode.end,
+        "preserve",
       );
-      if (name) {
-        const start = caret - completedToken[0].length;
-        input.setRangeText(emoji[name], start, caret - 1, "preserve");
-        closePicker();
-        input.dispatchEvent(new Event("input", { bubbles: true }));
-        return;
-      }
+      closePicker();
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      return;
     }
 
-    const token = /:([a-z0-9_+-]+)$/i.exec(beforeCaret);
-    if (!token) return closePicker();
+    const suggestions = findSuggestions(beforeCaret, emoji);
+    if (!suggestions) return closePicker();
 
-    const prefix = token[1].toLowerCase();
-    queryRange = { start: caret - token[0].length, end: caret };
-    matches = Object.keys(emoji)
-      .filter((name) => name.toLowerCase().startsWith(prefix))
-      .slice(0, 30)
-      .map((name) => ({ name, emoji: emoji[name] }));
+    queryRange = suggestions.range;
+    matches = suggestions.matches;
 
     if (!matches.length) return closePicker();
     clearElement(picker);
