@@ -1,3 +1,5 @@
+import { MAX_SUGGESTIONS } from "./constants.js";
+
 const shortcodePattern = /:([a-z0-9_+-]+)(: )?$/i;
 
 export const findCompletedShortcode = (text, emoji) => {
@@ -25,7 +27,7 @@ export const findSuggestions = (text, emoji) => {
     range: { start: text.length - token[0].length, end: text.length },
     matches: Object.keys(emoji)
       .filter((name) => name.toLowerCase().startsWith(prefix))
-      .slice(0, 30)
+      .slice(0, MAX_SUGGESTIONS)
       .map((name) => ({ name, emoji: emoji[name] })),
   };
 };
