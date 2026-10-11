@@ -2,92 +2,99 @@
 <html>
   <head>
     <title>Emoji picker!</title>
-    <meta charset="utf-8"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <style>
-    html, body {
-      font-family: "segoe ui emoji", sans-serif;
-      margin: 20px;
-      height: 100%;
-      margin: 0;
-      font-size: 30px;
-    }
-    .container {
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      margin: 0 auto;
-    }
-    .wrap {
-      margin: 40px auto;
-      width: 70%;
-      text-align: center;
-    }
-    .wrap > div {
-      margin-bottom: 10px;
-    }
-    .wrap * {
-      width: 100%;
-    }
-    .input {
-      font-size: 30px;
-      font-family: "segoe ui emoji", sans-serif;
-      width: 80%;
-      max-width: 600px;
-      letter-spacing: 1px;
-      border-radius: 6px;
-      padding: 10px;
-      border: 3px solid grey;
-      outline: none;
-      margin-bottom: 6px;
-    }
-    .input:focus {
-      border-color: hotpink;
-    }
-    .emoji {
-      width: auto;
-      display: inline-block;
-      font-size: 30px;
-      padding: 4px 8px;
-      margin: 4px;
-      border-radius: 6px;
-      border: 2px solid grey;
-      cursor: pointer;
-    }
-    .emoji:first-child {
-      margin-left: 0;
-    }
-    .emoji:hover {
-      border-color: hotpink;
-    }
-    .picker {
-      width: 80%;
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: left;
-    }
-    .emoji[aria-selected="true"], .emoji:focus-visible {
-      border-color: hotpink;
-      background: #fff0f7;
-      outline: 2px solid hotpink;
-      outline-offset: 1px;
-    }
+      html,
+      body {
+        font-family: "segoe ui emoji", sans-serif;
+        margin: 20px;
+        height: 100%;
+        margin: 0;
+        font-size: 30px;
+      }
+      .container {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        margin: 0 auto;
+      }
+      .wrap {
+        margin: 40px auto;
+        width: 70%;
+        text-align: center;
+      }
+      .wrap > div {
+        margin-bottom: 10px;
+      }
+      .wrap * {
+        width: 100%;
+      }
+      .input {
+        font-size: 30px;
+        font-family: "segoe ui emoji", sans-serif;
+        width: 80%;
+        max-width: 600px;
+        letter-spacing: 1px;
+        border-radius: 6px;
+        padding: 10px;
+        border: 3px solid grey;
+        outline: none;
+        margin-bottom: 6px;
+      }
+      .input:focus {
+        border-color: hotpink;
+      }
+      .emoji {
+        width: auto;
+        display: inline-block;
+        font-size: 30px;
+        padding: 4px 8px;
+        margin: 4px;
+        border-radius: 6px;
+        border: 2px solid grey;
+        cursor: pointer;
+      }
+      .emoji:first-child {
+        margin-left: 0;
+      }
+      .emoji:hover {
+        border-color: hotpink;
+      }
+      .picker {
+        width: 80%;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: left;
+      }
+      .emoji[aria-selected="true"],
+      .emoji:focus-visible {
+        border-color: hotpink;
+        background: #fff0f7;
+        outline: 2px solid hotpink;
+        outline-offset: 1px;
+      }
     </style>
   </head>
   <body>
-    <div class='container'>
-      <div class='wrap'>
+    <div class="container">
+      <div class="wrap">
         <div>Try typing <code>:dog:</code></div>
-        <input type='text' class='input' />
+        <input type="text" class="input" />
       </div>
     </div>
   </body>
-  <script type='module'>
-  import picker from './src/index.js'
-  import fetchJSON from './src/fetchJSON.js'
-  fetchJSON('./src/emoji.json').then(emoji => picker('.input', emoji)).catch(error => {
-    console.error(error)
-  })
+  <script type="module">
+    import picker from "./src/index.js";
+    import fetchJSON from "./src/fetchJSON.js";
+    fetchJSON("./src/emoji.json")
+      .then((emoji) => picker(".input", emoji))
+      .catch((error) => {
+        console.error(error);
+      });
   </script>
 </html>
