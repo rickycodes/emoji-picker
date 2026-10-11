@@ -63,17 +63,23 @@ describe("emoji picker", () => {
     input.setSelectionRange(caret, caret);
     input.dispatchEvent(new Event("input", { bubbles: true }));
 
-    input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true }));
+    input.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true }),
+    );
     expect(input.getAttribute("aria-activedescendant")).toBe(
       instance.picker.querySelector('[data-index="0"]').id,
     );
 
-    input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));
+    input.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }),
+    );
     expect(input.getAttribute("aria-activedescendant")).toBe(
       instance.picker.querySelector('[data-index="1"]').id,
     );
 
-    input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+    input.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "Enter", bubbles: true }),
+    );
 
     expect(input.value).toBe("hello 🐕 world");
     expect(input.getAttribute("aria-expanded")).toBe("false");
@@ -85,7 +91,9 @@ describe("emoji picker", () => {
     input.dispatchEvent(new Event("input", { bubbles: true }));
     expect(input.getAttribute("aria-expanded")).toBe("true");
 
-    input.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+    input.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "Escape", bubbles: true }),
+    );
     expect(input.getAttribute("aria-expanded")).toBe("false");
 
     instance.destroy();

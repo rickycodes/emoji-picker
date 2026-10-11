@@ -62,7 +62,8 @@ export default (selector, emoji) => {
     const completedToken = /:([a-z0-9_+-]+): $/i.exec(beforeCaret);
     if (completedToken) {
       const name = Object.keys(emoji).find(
-        (candidate) => candidate.toLowerCase() === completedToken[1].toLowerCase(),
+        (candidate) =>
+          candidate.toLowerCase() === completedToken[1].toLowerCase(),
       );
       if (name) {
         const start = caret - completedToken[0].length;
