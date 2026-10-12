@@ -23,7 +23,14 @@ export default (selector, emoji) => {
 
   const selectEmoji = (emojiCharacter) => {
     if (!queryRange) return;
-    input.setRangeText(emojiCharacter, queryRange.start, queryRange.end, "end");
+    const followingText = input.value.slice(queryRange.end);
+    const trailingSpace = /^\s/.test(followingText) ? "" : " ";
+    input.setRangeText(
+      `${emojiCharacter}${trailingSpace}`,
+      queryRange.start,
+      queryRange.end,
+      "end",
+    );
     closePicker();
     input.focus();
     input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
