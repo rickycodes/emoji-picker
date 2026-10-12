@@ -1,13 +1,10 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <title>Emoji picker!</title>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       html,
       body {
@@ -28,7 +25,8 @@
         width: 70%;
         text-align: center;
       }
-      .wrap > div {
+      .wrap > label {
+        display: block;
         margin-bottom: 10px;
       }
       .wrap * {
@@ -47,7 +45,7 @@
         margin-bottom: 6px;
       }
       .input:focus {
-        border-color: hotpink;
+        border-color: #a00050;
       }
       .emoji {
         width: auto;
@@ -63,7 +61,7 @@
         margin-left: 0;
       }
       .emoji:hover {
-        border-color: hotpink;
+        border-color: #a00050;
       }
       .picker {
         width: 80%;
@@ -73,20 +71,20 @@
       }
       .emoji[aria-selected="true"],
       .emoji:focus-visible {
-        border-color: hotpink;
+        border-color: #a00050;
         background: #fff0f7;
-        outline: 2px solid hotpink;
+        outline: 2px solid #a00050;
         outline-offset: 1px;
       }
     </style>
   </head>
   <body>
-    <div class="container">
+    <main class="container">
       <div class="wrap">
-        <div>Try typing <code>:dog:</code></div>
-        <input type="text" class="input" />
+        <label for="emoji-input">Try typing <code>:dog:</code></label>
+        <input id="emoji-input" type="text" class="input" />
       </div>
-    </div>
+    </main>
   </body>
   <script type="module">
     import picker from "./src/index.js";
