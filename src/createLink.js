@@ -11,7 +11,7 @@ import {
 export default (match, index, pickerId) => {
   const option = document.createElement(ELEMENT_DIV);
   option.textContent = match.emoji;
-  option.id = `${pickerId}-option-${index}`;
+  option.id = `${pickerId}-${ROLE_OPTION}-${index}`;
   option.dataset.index = index;
   setAttributes(option, {
     [ROLE]: ROLE_OPTION,

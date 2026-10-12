@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import picker from "./index.js";
 import emoji from "./emoji.test-fixtures.js";
+import { EVENT_INPUT, EVENT_KEYDOWN } from "./constants.js";
 
 let instance;
 
@@ -22,13 +23,13 @@ describe("emoji picker", () => {
   it("shows matching suggestions and closes when there are no matches", () => {
     const input = setup(":do");
     input.setSelectionRange(input.value.length, input.value.length);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
 
     expect(instance.picker.querySelectorAll('[role="option"]')).toHaveLength(3);
 
     input.value = ":xyz";
     input.setSelectionRange(input.value.length, input.value.length);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
 
     expect(instance.picker.querySelectorAll('[role="option"]')).toHaveLength(0);
     expect(input.getAttribute("aria-expanded")).toBe("false");
@@ -37,7 +38,7 @@ describe("emoji picker", () => {
   it("replaces an exact shortcode when followed by a space", () => {
     const input = setup("Say :cat: ");
     input.setSelectionRange(input.value.length, input.value.length);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
 
     expect(input.value).toBe("Say 🐱 ");
     expect(input.selectionStart).toBe(input.value.length);
@@ -47,7 +48,7 @@ describe("emoji picker", () => {
     const input = setup("hello :do world");
     const caret = "hello :do".length;
     input.setSelectionRange(caret, caret);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
 
     instance.picker.querySelector('[data-index="1"]').click();
 
@@ -58,7 +59,7 @@ describe("emoji picker", () => {
   it("leaves unknown completed shortcodes unchanged", () => {
     const input = setup("Say :unknown: ");
     input.setSelectionRange(input.value.length, input.value.length);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
 
     expect(input.value).toBe("Say :unknown: ");
   });
@@ -67,24 +68,24 @@ describe("emoji picker", () => {
     const input = setup("hello :do world");
     const caret = "hello :do".length;
     input.setSelectionRange(caret, caret);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
 
     input.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true }),
+      new KeyboardEvent(EVENT_KEYDOWN, { key: "ArrowDown", bubbles: true }),
     );
     expect(input.getAttribute("aria-activedescendant")).toBe(
       instance.picker.querySelector('[data-index="0"]').id,
     );
 
     input.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }),
+      new KeyboardEvent(EVENT_KEYDOWN, { key: "ArrowRight", bubbles: true }),
     );
     expect(input.getAttribute("aria-activedescendant")).toBe(
       instance.picker.querySelector('[data-index="1"]').id,
     );
 
     input.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "Enter", bubbles: true }),
+      new KeyboardEvent(EVENT_KEYDOWN, { key: "Enter", bubbles: true }),
     );
 
     expect(input.value).toBe("hello 🐕 world");
@@ -94,10 +95,12 @@ describe("emoji picker", () => {
   it("keeps keyboard navigation within the first and last suggestions", () => {
     const input = setup(":do");
     input.setSelectionRange(input.value.length, input.value.length);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
     const options = instance.picker.querySelectorAll('[role="option"]');
     const press = (key) =>
-      input.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
+      input.dispatchEvent(
+        new KeyboardEvent(EVENT_KEYDOWN, { key, bubbles: true }),
+      );
 
     press("ArrowDown");
     press("ArrowLeft");
@@ -130,11 +133,11 @@ describe("emoji picker", () => {
   it("closes on Escape and destroy removes picker attributes and behavior", () => {
     const input = setup(":dog");
     input.setSelectionRange(input.value.length, input.value.length);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
     expect(input.getAttribute("aria-expanded")).toBe("true");
 
     input.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "Escape", bubbles: true }),
+      new KeyboardEvent(EVENT_KEYDOWN, { key: "Escape", bubbles: true }),
     );
     expect(input.getAttribute("aria-expanded")).toBe("false");
 
@@ -145,7 +148,7 @@ describe("emoji picker", () => {
     expect(input.hasAttribute("role")).toBe(false);
 
     input.value = ":dog";
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event(EVENT_INPUT, { bubbles: true }));
     expect(document.querySelector(".picker")).toBeNull();
   });
 });
