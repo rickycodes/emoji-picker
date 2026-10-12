@@ -1,11 +1,17 @@
 # Emoji Picker
 
+[![Live demo](https://img.shields.io/badge/demo-live-ec4899)](https://rickycodes.github.io/emoji-picker/)
+[![Latest release](https://img.shields.io/github/v/release/rickycodes/emoji-picker)](https://github.com/rickycodes/emoji-picker/releases/latest)
 [![Tests](https://github.com/rickycodes/emoji-picker/actions/workflows/test.yml/badge.svg)](https://github.com/rickycodes/emoji-picker/actions/workflows/test.yml)
 [![Coverage](https://codecov.io/gh/rickycodes/emoji-picker/branch/main/graph/badge.svg)](https://app.codecov.io/gh/rickycodes/emoji-picker/tree/main)
 
-A small vanilla JavaScript emoji picker. Type a shortcode such as `:dog` to see matching emoji, then choose one with the mouse or keyboard.
+A lightweight, accessible emoji picker built with vanilla JavaScript. Type a shortcode such as `:dog` to find matching emoji, then choose one with the mouse or keyboard.
 
 ![Demo: typing shortcodes and selecting cat and dog emoji](emoji-picker-demo.gif)
+
+**[Try the live demo](https://rickycodes.github.io/emoji-picker/)**
+
+Search by shortcode, navigate suggestions with the keyboard, and insert emoji at the text caret. The picker uses native browser modules and needs no build step.
 
 ## Use
 
