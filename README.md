@@ -46,21 +46,6 @@ npm run format
 npm run format:check
 ```
 
-## Record a demo
-
-Install Playwright's Chromium browser once, then record the demo at 800 × 600:
-
-```sh
-npx playwright install chromium
-npm run record:demo
-```
-
-The WebM recording is saved to `recordings/emoji-picker-demo.webm`. To create the GIF shown above with FFmpeg:
-
-```sh
-ffmpeg -i recordings/emoji-picker-demo.webm -filter_complex "[0:v]fps=12,scale=800:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 emoji-picker-demo.gif
-```
-
 ## License
 
 Copyright (c) 2016 Ricky Miller (@rickycodes). Released under the [MIT license](https://tldrlegal.com/license/mit-license).
