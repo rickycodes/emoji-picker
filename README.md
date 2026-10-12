@@ -5,6 +5,8 @@
 
 A small vanilla JavaScript emoji picker. Type a shortcode such as `:dog` to see matching emoji, then choose one with the mouse or keyboard.
 
+![Demo: typing shortcodes and selecting cat and dog emoji](emoji-picker-demo.gif)
+
 ## Use
 
 The project uses native browser ES modules and does not need a build step. Serve this directory over HTTP and open `index.html` (browsers generally block module imports from `file://`).
@@ -42,6 +44,21 @@ Format the project with Prettier, or check formatting without changing files:
 ```sh
 npm run format
 npm run format:check
+```
+
+## Record a demo
+
+Install Playwright's Chromium browser once, then record the demo at 800 × 600:
+
+```sh
+npx playwright install chromium
+npm run record:demo
+```
+
+The WebM recording is saved to `recordings/emoji-picker-demo.webm`. To create the GIF shown above with FFmpeg:
+
+```sh
+ffmpeg -i recordings/emoji-picker-demo.webm -filter_complex "[0:v]fps=12,scale=800:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 emoji-picker-demo.gif
 ```
 
 ## License
