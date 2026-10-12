@@ -67,12 +67,20 @@
         outline: none;
       }
       .picker {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         margin-top: 12px;
       }
       .emoji {
-        display: inline-block;
-        margin: 4px 6px 4px 0;
-        padding: 8px 12px;
+        display: flex;
+        flex: 0 0 48px;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 48px;
+        height: 48px;
+        padding: 0;
         border: 2px solid #a8a29e;
         border-radius: 6px;
         background: #fff;
