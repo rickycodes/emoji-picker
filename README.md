@@ -11,7 +11,7 @@ A lightweight, accessible emoji picker built with vanilla JavaScript. Type a sho
 
 **[Try the live demo](https://rickycodes.github.io/emoji-picker/)**
 
-Search by shortcode, navigate suggestions with the keyboard, and insert emoji at the text caret. The picker uses native browser modules and needs no build step.
+Search by shortcode, navigate suggestions with **Left/Right**, and insert emoji at the text caret. The picker uses native browser modules and needs no build step.
 
 ## Use
 
